@@ -1,5 +1,5 @@
 [deployment]
-run = "python main.py"
+run = "python3 main.py"
 deploymentTarget = "cloudrun"
 
 [deployment.env]
