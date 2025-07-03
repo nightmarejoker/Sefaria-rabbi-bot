@@ -29,7 +29,7 @@ Keep responses under 2000 characters to fit Discord's message limits."""
         self.system_prompt = prompt
         logger.info("System prompt updated")
     
-    async def generate_response(self, user_message: str, user_name: str = None) -> str:
+    async def generate_response(self, user_message: str, user_name: str = "") -> str:
         """Generate an AI response to a user message"""
         try:
             response = self.client.chat.completions.create(
@@ -49,7 +49,7 @@ Keep responses under 2000 characters to fit Discord's message limits."""
             logger.error(f"Error generating AI response: {e}")
             return "I'm sorry, I'm having trouble responding right now. Please try again later."
     
-    async def generate_contextual_response(self, user_message: str, context: str = None, user_name: str = None) -> str:
+    async def generate_contextual_response(self, user_message: str, context: str = "", user_name: str = "") -> str:
         """Generate a response with additional context"""
         try:
             messages = [{"role": "system", "content": self.system_prompt}]

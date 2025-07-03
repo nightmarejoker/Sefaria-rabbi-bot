@@ -94,6 +94,9 @@ The application is designed for simple deployment with minimal configuration:
 ## Changelog
 
 - July 03, 2025. Initial setup
+- July 03, 2025. Added AI conversation capabilities with OpenAI GPT-3.5-turbo integration
+- July 03, 2025. Implemented @mention handling for natural conversations
+- July 03, 2025. Added /setprompt command for customizing AI behavior
 
 ## User Preferences
 

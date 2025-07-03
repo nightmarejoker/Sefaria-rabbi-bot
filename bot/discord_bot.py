@@ -79,7 +79,7 @@ class SefariaBot(commands.Bot):
             return
         
         # Check if the bot was mentioned
-        if self.user.mentioned_in(message):
+        if self.user and self.user.mentioned_in(message):
             # Remove the bot mention from the message content
             content = message.content
             for mention in message.mentions:
