@@ -14,3 +14,7 @@ dependencies = [
 [build-system]
 requires = ["setuptools>=45", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["bot*"]
+exclude = ["attached_assets*"]
