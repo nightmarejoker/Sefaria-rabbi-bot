@@ -59,7 +59,7 @@ async def start_web_server():
     await runner.setup()
     
     # Use port from environment or default to 5000 for deployment
-    port = int(os.getenv('PORT', 5000))
+    port = int(os.getenv('PORT', 8080))
     site = web.TCPSite(runner, '0.0.0.0', port)
     await site.start()
     logger.info(f"Web server started on port {port}")
