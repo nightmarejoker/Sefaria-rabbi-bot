@@ -37,3 +37,7 @@ args = "pip install discord.py aiohttp python-dotenv && echo \"DISCORD_TOKEN=tes
 
 [deployment]
 deploymentTarget = "cloudrun"
+
+[[ports]]
+localPort = 5000
+externalPort = 80

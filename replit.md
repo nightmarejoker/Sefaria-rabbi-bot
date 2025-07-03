@@ -8,13 +8,15 @@ This is a Discord bot that integrates with the Sefaria API to provide access to 
 
 The application follows a modular architecture with clear separation of concerns:
 
-- **Main Entry Point** (`main.py`): Handles bot initialization and startup
+- **Main Entry Point** (`main.py`): Handles bot initialization, startup, and web server for health checks
 - **Bot Core** (`bot/discord_bot.py`): Main bot class extending discord.py's commands.Bot
 - **Command Handler** (`bot/commands.py`): Discord slash commands implementation
 - **API Client** (`bot/sefaria_client.py`): Sefaria API integration with rate limiting
+- **AI Client** (`bot/ai_client.py`): OpenAI integration for conversational AI responses
 - **Utilities** (`bot/utils.py`): Text formatting and processing helpers
 
 The architecture prioritizes:
+- Hybrid deployment supporting both Discord bot and web health checks
 - Asynchronous operations for non-blocking API calls
 - Rate limiting to respect Sefaria API constraints
 - Error handling and logging throughout the system
@@ -75,21 +77,30 @@ The flow implements proper error handling at each stage, with fallback responses
 
 ## Deployment Strategy
 
-The application is designed for simple deployment with minimal configuration:
+The application is designed for hybrid deployment supporting both Discord bot functionality and web service requirements:
+
+### Web Server Integration
+- HTTP health check endpoints at `/` and `/health`
+- Serves on port 5000 (0.0.0.0 binding for external access)
+- JSON responses for deployment platform health checks
+- Concurrent operation with Discord bot services
 
 ### Environment Setup
 - Load environment variables from `.env` file
 - Discord token must be provided via `DISCORD_TOKEN` environment variable
+- PORT environment variable supported (defaults to 5000)
 
 ### Logging Configuration
 - Dual logging to both file (`sefaria_bot.log`) and console
 - INFO level logging for operational visibility
 - Structured error handling with detailed logging
+- Web server access logging included
 
 ### Process Management
 - Graceful shutdown handling for SIGINT
 - Async context management for proper resource cleanup
 - Session management for HTTP connections
+- Concurrent task management for web server and Discord bot
 
 ## Changelog
 
@@ -97,6 +108,7 @@ The application is designed for simple deployment with minimal configuration:
 - July 03, 2025. Added AI conversation capabilities with OpenAI GPT-3.5-turbo integration
 - July 03, 2025. Implemented @mention handling for natural conversations
 - July 03, 2025. Added /setprompt command for customizing AI behavior
+- July 03, 2025. Fixed deployment issues by adding web server with health check endpoints
 
 ## User Preferences
 
