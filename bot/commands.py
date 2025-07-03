@@ -286,3 +286,33 @@ class SefariaCommands(commands.Cog):
                 color=discord.Color.red()
             )
             await interaction.followup.send(embed=embed)
+    
+    @app_commands.command(name="setprompt", description="Set the AI system prompt (admin only)")
+    @app_commands.describe(prompt="The new system prompt for the AI")
+    async def set_ai_prompt(self, interaction: discord.Interaction, prompt: str):
+        """Set the AI system prompt"""
+        # Check if user has administrator permissions
+        if not interaction.user.guild_permissions.administrator:
+            embed = discord.Embed(
+                title="❌ Permission Denied",
+                description="Only administrators can change the AI prompt.",
+                color=discord.Color.red()
+            )
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+            return
+        
+        # Update the AI prompt
+        self.bot.ai_client.set_system_prompt(prompt)
+        
+        embed = discord.Embed(
+            title="✅ AI Prompt Updated",
+            description="The AI system prompt has been successfully updated.",
+            color=discord.Color.green()
+        )
+        embed.add_field(
+            name="New Prompt Preview",
+            value=prompt[:200] + "..." if len(prompt) > 200 else prompt,
+            inline=False
+        )
+        
+        await interaction.response.send_message(embed=embed)
