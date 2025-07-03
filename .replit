@@ -34,3 +34,6 @@ author = "agent"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "pip install discord.py aiohttp python-dotenv && echo \"DISCORD_TOKEN=test_token_placeholder\" > .env && python main.py"
+
+[deployment]
+deploymentTarget = "cloudrun"
