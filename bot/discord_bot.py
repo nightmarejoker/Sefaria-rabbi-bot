@@ -14,10 +14,9 @@ class SefariaBot(commands.Bot):
     """Discord bot for Sefaria Jewish texts"""
     
     def __init__(self):
-        # Configure intents - using default intents only (no privileged intents needed)
+        # Configure intents - need message content for @mentions to work
         intents = discord.Intents.default()
-        # Remove privileged intent that requires special permission
-        # intents.message_content = True
+        intents.message_content = True  # Required for reading message content when @mentioned
         
         super().__init__(
             command_prefix='!',
