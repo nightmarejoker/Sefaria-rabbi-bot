@@ -28,6 +28,9 @@ class SefariaBot(commands.Bot):
         self.sefaria_client = SefariaClient()
         self.ai_client = AIClient()
         
+        # Track processed messages to prevent duplicates
+        self.processed_messages = set()
+        
     async def setup_hook(self):
         """Called when the bot is starting up"""
         try:
@@ -77,8 +80,23 @@ class SefariaBot(commands.Bot):
         if message.author == self.user:
             return
         
+        # Check for duplicate message processing
+        message_id = message.id
+        if message_id in self.processed_messages:
+            return
+        
         # Check if the bot was mentioned
         if self.user and self.user.mentioned_in(message):
+            # Mark message as processed to prevent duplicates
+            self.processed_messages.add(message_id)
+            
+            # Clean up old message IDs (keep only last 1000 to prevent memory issues)
+            if len(self.processed_messages) > 1000:
+                # Remove oldest 100 entries
+                old_messages = list(self.processed_messages)[:100]
+                for old_id in old_messages:
+                    self.processed_messages.discard(old_id)
+            
             # Remove the bot mention from the message content
             content = message.content
             for mention in message.mentions:

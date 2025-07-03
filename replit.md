@@ -109,6 +109,7 @@ The application is designed for hybrid deployment supporting both Discord bot fu
 - July 03, 2025. Implemented @mention handling for natural conversations
 - July 03, 2025. Added /setprompt command for customizing AI behavior
 - July 03, 2025. Fixed deployment issues by adding web server with health check endpoints
+- July 03, 2025. Fixed duplicate message responses by removing test workflow and adding message deduplication
 
 ## User Preferences
 
