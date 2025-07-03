@@ -1,9 +1,0 @@
-[deployment]
-run = "python3 main.py"
-deploymentTarget = "cloudrun"
-
-[deployment.env]
-PORT = "8080"
-
-[deployment.build]
-main = "main.py"
