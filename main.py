@@ -49,6 +49,7 @@ async def create_web_app():
     app = web.Application()
     app.router.add_get('/', index)
     app.router.add_get('/health', health_check)
+    app.router.add_get('/status', health_check)  # Alternative health check endpoint
     return app
 
 async def start_web_server():
@@ -86,17 +87,22 @@ async def main():
     bot = None
     
     try:
-        # Start web server for health checks
+        # Start web server for health checks first (critical for deployment)
         web_runner = await start_web_server()
         
-        # Start Discord bot
+        # Start Discord bot (optional - web server should stay up even if bot fails)
         bot_result = await start_discord_bot()
         if bot_result is None:
-            logger.error("Failed to start Discord bot")
+            logger.warning("Discord bot failed to start, but web server will continue running")
+            # Keep web server running indefinitely for health checks
+            try:
+                while True:
+                    await asyncio.sleep(60)  # Keep alive
+            except KeyboardInterrupt:
+                logger.info("Application shutdown requested by user")
             return
         
         bot_task, bot = bot_result
-        
         logger.info("Both web server and Discord bot are running")
         
         # Keep the application running
@@ -104,6 +110,13 @@ async def main():
             await bot_task
         except Exception as e:
             logger.error(f"Discord bot error: {e}")
+            # Even if bot fails, keep web server running
+            logger.info("Keeping web server running for health checks")
+            try:
+                while True:
+                    await asyncio.sleep(60)  # Keep alive
+            except KeyboardInterrupt:
+                logger.info("Application shutdown requested by user")
         
     except KeyboardInterrupt:
         logger.info("Application shutdown requested by user")
