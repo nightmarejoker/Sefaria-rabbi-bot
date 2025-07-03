@@ -11,7 +11,7 @@ dependencies = [
 ]
 
 [project.scripts]
-sefaria-bot = "main:main"
+sefaria-bot = "deploy:main"
 
 [build-system]
 requires = ["setuptools>=45", "wheel"]

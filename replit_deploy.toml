@@ -1,9 +1,9 @@
 [deployment]
-run = "python main.py"
+run = "python app.py"
 deploymentTarget = "cloudrun"
 
 [deployment.env]
 PORT = "5000"
 
 [deployment.build]
-main = "main.py"
+main = "app.py"

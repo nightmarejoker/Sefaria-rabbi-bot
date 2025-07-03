@@ -9,4 +9,4 @@ pip install aiohttp>=3.12.13 discord.py>=2.5.2 openai>=1.93.0 python-dotenv>=1.1
 
 # Start the application
 echo "Starting application..."
-python main.py
+python app.py
